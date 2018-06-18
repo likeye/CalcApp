@@ -31,5 +31,39 @@ namespace CalculatorAppTests
             var sum = _calc.Add(-4, -2);
             Assert.AreEqual(sum, -6);
         }
+        [TestCase(4, 2, 2.0f)]
+        [TestCase(-4, 2, -2.0f)]
+        [TestCase(4, -2, -2.0f)]
+        [TestCase(0, 3, 0.0f)]
+        [TestCase(5, 2, 2.5f)]
+        [TestCase(1, 3, 0.333333343f)] // 4 bo zaokrąglanie - zapamiętać ~
+
+        public void Divide_ReturnsProperValue(int dividend, int divisor, float expectedQuotient)
+        {
+            var calc = new Calculator();
+            var quotient = calc.Divide(dividend, divisor);
+            Assert.AreEqual(expectedQuotient, quotient);
+        }
+
+        [Test]
+        public void Divide_DivisionByZero_ThrowsException()
+        {
+            var calc = new Calculator();
+            Assert.Throws<DivideByZeroException>(delegate { calc.Divide(2, 0); }); // można tak: Assert.Throws<DivideByZeroException>(() => calc.Divide(2, 0));
+        }
+
+        [Test]
+        public void Divide_OnCalculatedEventIsCalled()
+        {
+            var calc = new Calculator();
+
+            bool wasEventCalled = false;
+            calc.CalculatedEvent += delegate { wasEventCalled = true; };  // lub : calc.CalculatedEvent += (sender, args) => wasEventCalled = true;
+            //WYRAZENIA LAMBDA
+            calc.Divide(1, 2);
+
+            Assert.IsTrue(wasEventCalled);
+
+        }
     }
 }
