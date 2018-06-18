@@ -45,5 +45,25 @@ namespace CalculatorAppTests
             Assert.AreEqual(expectedQuotient, quotient);
         }
 
+        [Test]
+        public void Divide_DivisionByZero_ThrowsException()
+        {
+            var calc = new Calculator();
+            Assert.Throws<DivideByZeroException>(delegate { calc.Divide(2, 0); }); // można tak: Assert.Throws<DivideByZeroException>(() => calc.Divide(2, 0));
+        }
+
+        [Test]
+        public void Divide_OnCalculatedEventIsCalled()
+        {
+            var calc = new Calculator();
+
+            bool wasEventCalled = false;
+            calc.CalculatedEvent += delegate { wasEventCalled = true; };  // lub : calc.CalculatedEvent += (sender, args) => wasEventCalled = true;
+            //WYRAZENIA LAMBDA
+            calc.Divide(1, 2);
+
+            Assert.IsTrue(wasEventCalled);
+
+        }
     }
 }
