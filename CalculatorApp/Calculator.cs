@@ -15,7 +15,11 @@ namespace CalculatorApp
 
         public float Divide(int dividend, int divisor)
         {
-            throw new NotImplementedException();
+            if (divisor == 0) throw new DivideByZeroException();
+
+            float result = (float)dividend / divisor;
+            OnCalculated();
+            return result;
         }
 
         public event EventHandler CalculatedEvent;
