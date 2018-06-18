@@ -10,7 +10,7 @@ namespace CalculatorApp
     {
         public int Add(int A, int B)
         {
-            throw new NotImplementedException();
+            return A + B;
         }
     }
 }
